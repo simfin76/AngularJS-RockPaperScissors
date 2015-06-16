@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="rpsApp">
+
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+
+      <title>Rock Paper Scissors</title>
+      <meta name="description" content="AngularJS SPA Rock Paper Scissors.">
+
+      <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+      <link href="css/app.min.css" rel="stylesheet">
+
+      <!-- For dev only: <link rel="stylesheet/less" type="text/css" href="less/app.less" /> -->
+      <!-- For dev only: <script src="http://cdnjs.cloudflare.com/ajax/libs/less.js/1.7.5/less.min.js"></script> -->
+
+      <!--[if lt IE 9]>
+         <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <![endif]-->
+   </head>
+
+   <body>
+      <header class="app-name container">
+         <h1>Rock Paper Scissors "The Game"</h1>
+      </header>
+    
+      <div class="container" ng-controller="gameController as gameCtrl">
+         <section ng-controller="playerController as playerCtrl" class="gamespace">           
+            <p class="instructions">{{instructions}}</p>
+            <div ng-repeat="player in playerCtrl.players" class="col-sm-6 player">
+               <h2>{{player.name}}</h2>
+
+               <div ng-controller="moveController as moveCtrl">
+                  <player-moves class="{{player.id}}-moves"></player-moves>
+
+                  <div ng-if="player.id=='human'" class="move-selector">
+                     <form name="move_form" role="form" ng-submit="gameCtrl.playMove()">
+                        <select class="form-control" name="move_select" ng-model="gameCtrl.game.humanChoice" required>
+                           <option value="">-- Give your move --</option>
+                           <option ng-repeat="move in moveCtrl.moves" value="{{move.id}}">{{move.name}}</option>
+                        </select>
+                        <button type="submit" class="btn btn-success" ng-disabled="move_form.$invalid">Play Move</button>
+                     </form>
+                  </div>
+
+               </div>
+
+            </div>
+            <div class="clearfix"></div>
+         </section>
+
+         <section class="game-stats" ng-include src=" 'route/scores.html' "></section>
+         
+      </div><!-- end .container -->
+
+      <footer class="app-info" ng-controller="infoController as infoCtrl">
+         <div class="modal-wrapper" ng-repeat="modal in infoCtrl.modalContent">
+            <span><a href="#{{modal.id}}" data-toggle="modal" class="modal-link">{{modal.title}}</a></span>
+            <div class="modal fade" id="{{modal.id}}" tabindex="-1" role="dialog" aria-labelledby="{{modal.id}}Label" aria-hidden="true">
+               <div class="modal-dialog">
+                  <div class="modal-content">
+                     <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h3 class="modal-title" id="{{modal.id}}">{{modal.title}}</h3>
+                     </div>
+                     <div class="modal-body">
+                        <div ng-include src="modal.url"></div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </footer>
+
+
+      <!-- Angular scripts -->
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.24/angular.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.24/angular-animate.js"></script>
+      <script src="js/app.js"></script>
+      <script src="js/game.js"></script>
+      <script src="js/info.js"></script>
+      <script src="lib/angular-fitvids.js"></script>
+
+      <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+      <script src="lib/bootstrap/js/bootstrap.min.js"></script>
+   </body>
+
+</html>

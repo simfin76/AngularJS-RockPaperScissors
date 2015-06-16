@@ -1,0 +1,8 @@
+<ul class="move-list">
+   <li ng-class="{true: 'initialized', false: 'in-progress'}[firstMove]">
+      <img src="images/start.svg" class="starting-move" ng-class="{true: 'bounce-enter', false: 'inactive'}[isActive]" ng-animate="'bounce'">
+   </li>
+   <li ng-repeat="move in moveCtrl.moves" ng-show="player.chosen == move.id ? true : false">
+      <img ng-src="images/{{move.id}}.png" class="{{move.id}}-move">
+   </li>
+</ul>
