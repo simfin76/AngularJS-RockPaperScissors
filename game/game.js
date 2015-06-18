@@ -190,7 +190,7 @@ var rpsAppGame = angular.module('rpsApp.game', [])
    .directive('playerMoves', function() {
       return {
          restrict: 'E',
-         templateUrl: 'game/moves.html',
+         templateUrl: 'moves.html',
          scope: true
       };
    })
